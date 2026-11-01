@@ -14,6 +14,7 @@ fn folder(name: &str) -> PathBuf {
     std::fs::create_dir_all(&dir).unwrap();
     std::fs::write(dir.join("horizon-linux-x86_64.tar.gz"), b"linux build").unwrap();
     std::fs::write(dir.join("horizon-windows-x64.zip"), b"windows build").unwrap();
+    std::fs::write(dir.join("horizon-windows-arm64.zip"), b"windows build").unwrap();
     let sums = horizon_release_sign::sums_file(&[
         (
             "horizon-linux-x86_64.tar.gz".into(),
@@ -23,6 +24,10 @@ fn folder(name: &str) -> PathBuf {
             "horizon-windows-x64.zip".into(),
             horizon_release_sign::sha256_hex(b"windows build"),
         ),
+        (
+            "horizon-windows-arm64.zip".into(),
+            horizon_release_sign::sha256_hex(b"windows build"),
+        )
     ]);
     std::fs::write(dir.join(SUMS), sums).unwrap();
     dir

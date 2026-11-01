@@ -3672,6 +3672,10 @@ pub fn {f}("
             platform_assets("windows", "x86_64").map(|(game, _)| game),
             Some("horizon-windows-x64.zip")
         );
+        assert_eq!(
+            platform_assets("windows", "aarch64").map(|(game, _)| game),
+            Some("horizon-windows-arm64.zip")
+        );
         assert_eq!(platform_assets("linux", "aarch64"), None);
         assert_eq!(platform_assets("macos", "x86"), None);
         assert_eq!(
