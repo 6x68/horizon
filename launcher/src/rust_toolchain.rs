@@ -109,12 +109,13 @@ const HOSTS: &[Host] = &[
 ];
 
 /// This computer's host, if the launcher ships a toolchain for it (the platforms it is released
-/// for: macOS on Apple silicon, Linux x86-64, Windows x64).
+/// for: macOS on Apple silicon, Linux x86-64, Windows x64, Windows ARM).
 pub fn host() -> Option<&'static Host> {
     let target = match (std::env::consts::OS, std::env::consts::ARCH) {
         ("macos", "aarch64") => "aarch64-apple-darwin",
         ("linux", "x86_64") => "x86_64-unknown-linux-gnu",
         ("windows", "x86_64") => "x86_64-pc-windows-gnu",
+        ("windows", "aarch64") => "aarch64-pc-windows-gnu",
         _ => return None,
     };
     HOSTS.iter().find(|h| h.target == target)
