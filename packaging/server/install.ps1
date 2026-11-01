@@ -16,8 +16,14 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $Repo = "horizon-rust/horizon"
-$Asset = "horizon-windows-x64.zip"
-if ($env:PROCESSOR_ARCHITECTURE -ne "ARM64" -and $env:PROCESSOR_ARCHITECTURE -ne "AMD64") {
+# $env:PROCESSOR_ARCHITECTURE -> the prefix used for $Asset
+$ArchMap = @{
+    ARM64 = "arm64";
+    AMD64 = "x64"
+}
+$ArchPostfix = $ArchMap[$env:PROCESSOR_ARCHITECTURE]
+$Asset = "horizon-windows-$ArchPostfix.zip"
+if ($ArchPostfix -eq $null) {
     throw "No Horizon release for Windows on $env:PROCESSOR_ARCHITECTURE yet: build it from source (docs/server.md)"
 }
 
